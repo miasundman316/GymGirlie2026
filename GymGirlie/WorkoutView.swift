@@ -8,6 +8,7 @@ import SwiftUI
 internal import Combine
 
 struct WorkoutView: View {
+    @EnvironmentObject var manager: WorkoutManager
     @Binding var chosen: [String]
     @Binding var numberOfSets: [Int]
     @Binding var numberCompleted: [Int]
@@ -138,6 +139,7 @@ struct WorkoutView: View {
                 HStack {
                     Button {
                         chosen.removeAll()
+                        manager.path = NavigationPath()
                     } label: {
                         Image(systemName: "clear.fill")
                     }

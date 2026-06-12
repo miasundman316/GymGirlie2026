@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var manager: WorkoutManager
     @State var gymDays: [String] = ["Leg", "Upper", "Push", "Pull"]
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $manager.path) {
             ZStack {
                 Color(.pink)
                     .opacity(0.1)
@@ -27,10 +28,15 @@ struct ContentView: View {
                         .bold()
                         .foregroundStyle(.pink)
                     List(gymDays, id: \.self) {day in
-                        NavigationLink {
-                            ExerciseView(day: day)
-                        } label: {
+                        NavigationLink(value: day) {
                             Text(day)
+                        }
+                    }
+                    .navigationDestination(for: String.self) { value in
+                        if value == "WorkoutView" {
+                            WorkoutView(chosen: $manager.chosen, numberOfSets: $manager.numberOfSets, numberCompleted: $manager.numberCompleted)
+                        } else {
+                            ExerciseView(day: value)
                         }
                     }
                     .listStyle(.insetGrouped)
@@ -47,5 +53,8 @@ struct ContentView: View {
 }
 
 #Preview {
+    @Previewable @StateObject var workoutManager = WorkoutManager()
+    
     ContentView()
+        .environmentObject(workoutManager)
 }
