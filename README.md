@@ -1,2 +1,2 @@
 # GymGirlie2026
-I had to create an update to the original GymGirlie because the Spotify API destroyed my project :(
+A simplified version of the original GymGirlie project I made. Removes the Spotify integration in order to reduce work required for users who do not use Spotify.
